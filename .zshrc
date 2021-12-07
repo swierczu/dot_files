@@ -4,7 +4,7 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 plugins=(
     git
-    osx
+    macos
     tmux
     iterm2
     ssh-agent
