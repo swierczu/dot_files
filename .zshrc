@@ -1,4 +1,4 @@
-export ZSH=/Users/swierczu/.oh-my-zsh
+export ZSH="/Users/swierczu/.oh-my-zsh"
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 # export MANPATH="/usr/local/man:$MANPATH"
 
@@ -9,26 +9,16 @@ plugins=(
     iterm2
     ssh-agent
     docker
+    docker-compose
     zsh-navigation-tools
+    fzf
+    z
 )
 
 VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
 VI_MODE_SET_CURSOR=true
 
 ZSH_THEME="amuse"
-#ZSH_THEME="powerlevel9k/powerlevel9k"
-#POWERLEVEL9K_MODE='nerdfont-complete'
-#POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(time dir vcs newline os_icon host user dir_writable status)
-#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(root_indicator background_jobs history time)
-#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
-#POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
-#POWERLEVEL9K_DIR_HOME_SUBFOLDER_FOREGROUND='white'
-#POWERLEVEL9K_DIR_PATH_SEPARATOR_FOREGROUND='white'
-#POWERLEVEL9K_DIR_PATH_HIGHLIGHT_FOREGROUND='white'
-#POWERLEVEL9K_DIR_PATH_HIGHLIGHT_BOLD=true
-#POWERLEVEL9K_SHORTEN_DIR_LENGTH=2
-#POWERLEVEL9K_SHORTEN_DELIMITER=""
-#POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 HIST_STAMPS="yyyy-mm-dd"
 
@@ -40,9 +30,9 @@ export LANG="en_US.UTF-8"
 alias emacs='/usr/local/bin/emacs'
 alias e='/usr/local/bin/emacsclient -n'
 alias ec='/usr/local/bin/emacsclient -t'
+alias grep='/usr/local/bin/ggrep'
 
 export EDITOR='/usr/local/bin/emacsclient -n'
-
 export PAGER=less
 
 # Go config
@@ -61,10 +51,23 @@ unalias gb
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/vault vault
 
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Python pyenv
 eval "$(pyenv init -)"
 eval "$(pyenv init --path)"
+
+# brew ZSH completions
+#
+# You may also need to force rebuild `zcompdump`:
+#   rm -f ~/.zcompdump; compinit
+#
+# Additionally, if you receive "zsh compinit: insecure directories" warnings when attempting
+# to load these completions, you may need to run this:
+#   chmod -R go-w '/usr/local/share/zsh'
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+    autoload -Uz compinit
+    compinit
+fi
